@@ -16,7 +16,7 @@ class Node:
 
 	def get_id(self):
 		# getting current time of the get_id request
-		current_time = time.time_ns()
+		current_time = int(time.time()*1000)
 
 		# checking if a request has already been made this millisecond
 		if current_time == self.last_reponse_time:
@@ -26,8 +26,8 @@ class Node:
 			if self.course > (2 ** self.COURSE_BITS) - 1:
 		
 				# waiting for the next millisecond (time.sleep(1/1000) would actually sleep for at least 10ms)
-				while(current_time == self.last_reponse_time):
-					current_time = time.time_ns()
+				while(current_time - self.last_reponse_time < 1):
+					current_time = int(time.time()*1000)
 			
 				self.course = 0
 		
